@@ -4,13 +4,13 @@ const CLIEngine = require("eslint").CLIEngine;
 const path = require("path");
 const defaultOptions = {
     // path to .eslintrc file
-    configFile: null,
+    "configFile": null,
     // recognize lang of CodeBlock
-    langs: ["js", "javascript", "node", "jsx"]
+    "langs": ["js", "javascript", "node", "jsx"]
 };
-module.exports = function (context, options) {
+module.exports = function(context, options) {
     const {Syntax, RuleError, report, getSource} = context;
-    if(!options.configFile) {
+    if (!options.configFile) {
         throw new Error(`Require options: { "configFile": "path/to/.eslintrc" }`);
     }
     const availableLang = options.langs || defaultOptions.langs;

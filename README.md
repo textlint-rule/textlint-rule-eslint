@@ -43,12 +43,12 @@ Install with [npm](https://www.npmjs.com/):
 
 Via `.textlintrc`(Recommended)
 
-```json
+```js
 {
     "rules": {
         "eslint": {
           // Required: path to .eslintrc file
-          configFile: "path/to/.eslintrc"
+          "configFile": "path/to/.eslintrc"
         }
     }
 }
@@ -73,9 +73,9 @@ textlint --rule eslint README.md
     "rules": {
         "eslint": {
             // Required: path to .eslintrc file
-            configFile: "path/to/.eslintrc",
+            "configFile": "path/to/.eslintrc",
             // recognize lang of CodeBlock
-            langs: ["js", "javascript", "node", "jsx"]
+            "langs": ["js", "javascript", "node", "jsx"]
         }
     }
 }
