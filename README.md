@@ -18,6 +18,8 @@ But, eslint-plugin-markdown don't support disabling Markdown(HTML) comment for i
     <!-- textlint-enable -->
 
 
+Sometimes, we want to write broken JavaScript code into JS CodeBlock for Syntax Highlight at the same time.
+
 ## Install
 
 Install with [npm](https://www.npmjs.com/):
