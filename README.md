@@ -23,14 +23,14 @@ Sometimes, we want to write broken JavaScript code into JS CodeBlock for Syntax 
 
     This is error example of parsing:
 
-    <!-- textlint-disable -->
+    <!-- textlint-disable eslint -->
 
     ```js
     // This is invalid example
     const const;
     ```
 
-    <!-- textlint-enable -->
+    <!-- textlint-enable eslint -->
 
 ## Install
 
