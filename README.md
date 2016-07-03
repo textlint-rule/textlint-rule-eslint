@@ -26,7 +26,8 @@ Sometimes, we want to write broken JavaScript code into JS CodeBlock for Syntax 
     <!-- textlint-disable -->
 
     ```js
-    const wrongUsage;
+    // This is invalid example
+    const const;
     ```
 
     <!-- textlint-enable -->
