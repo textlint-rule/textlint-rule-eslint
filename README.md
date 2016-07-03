@@ -21,7 +21,7 @@ But, eslint-plugin-markdown don't support disabling Markdown(HTML) comment for i
 Sometimes, we want to write broken JavaScript code into JS CodeBlock for Syntax Highlight at the same time.
 
 
-    This is parse error example:
+    This is error example of parsing:
 
     <!-- textlint-disable -->
 
