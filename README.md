@@ -18,7 +18,7 @@ But, eslint-plugin-markdown don't support disabling Markdown(HTML) comment for i
     <!-- textlint-enable -->
 
 
-Sometimes, we want to write broken JavaScript code into JS CodeBlock for Syntax Highlight at the same time.
+Sometimes, we want to write broken JavaScript code into JS CodeBlock for Syntax Highlight.
 
 
     This is error example of parsing:
@@ -46,7 +46,10 @@ Via `.textlintrc`(Recommended)
 ```json
 {
     "rules": {
-        "eslint": true
+        "eslint": {
+          // Required: path to .eslintrc file
+          configFile: "path/to/.eslintrc"
+        }
     }
 }
 ```
