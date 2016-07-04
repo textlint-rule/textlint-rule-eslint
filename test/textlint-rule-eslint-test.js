@@ -19,11 +19,16 @@ tester.run("textlint-rule-eslint", rule, {
             text: "```js\n" +
             WrongCode1 + "\n" +
             "```",
-            errors: [{
-                message: "semi: Missing semicolon.",
-                line: 2,
-                column: 10
-            }],
+            output: "```js\n" +
+            WrongCode1 + ";\n" +
+            "```",
+            errors: [
+                {
+                    message: "semi: Missing semicolon.",
+                    line: 2,
+                    column: 10
+                }
+            ],
             options: {
                 configFile: __dirname + "/fixtures/style.eslintconfig.js"
             }
@@ -37,15 +42,24 @@ tester.run("textlint-rule-eslint", rule, {
             "```js\n" +
             WrongCode2 + "\n" +
             "```",
-            errors: [{
-                message: "semi: Missing semicolon.",
-                line: 2,
-                column: 10
-            }, {
-                message: "semi: Missing semicolon.",
-                line: 6,
-                column: 21
-            }],
+            output: "```js\n" +
+            WrongCode1 + ";\n" +
+            "```\n" +
+            "This is text.\n" +
+            "```js\n" +
+            WrongCode2 + ";\n" +
+            "```",
+            errors: [
+                {
+                    message: "semi: Missing semicolon.",
+                    line: 2,
+                    column: 10
+                }, {
+                    message: "semi: Missing semicolon.",
+                    line: 6,
+                    column: 21
+                }
+            ],
             options: {
                 configFile: __dirname + "/fixtures/style.eslintconfig.js"
             }

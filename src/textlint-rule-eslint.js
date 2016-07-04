@@ -8,8 +8,8 @@ const defaultOptions = {
     // recognize lang of CodeBlock
     "langs": ["js", "javascript", "node", "jsx"]
 };
-module.exports = function(context, options) {
-    const {Syntax, RuleError, report, getSource} = context;
+const reporter = (context, options) => {
+    const {Syntax, RuleError, report, fixer, getSource} = context;
     if (!options.configFile) {
         throw new Error(`Require options: { "configFile": "path/to/.eslintrc" }`);
     }
@@ -27,6 +27,7 @@ module.exports = function(context, options) {
             if (availableLang.indexOf(node.lang) === -1) {
                 return;
             }
+            const raw = getSource(node);
             const code = node.value;
             const resultLinting = engine.executeOnText(code, extname);
             if (resultLinting.errorCount === 0) {
@@ -43,13 +44,29 @@ module.exports = function(context, options) {
 
                      ESLint message line and column start with 1
                      */
-                    const error = new RuleError(`${message.ruleId}: ${message.message}`, {
-                        line: message.line,
-                        column: message.column - 1
-                    });
-                    report(node, error);
+                    if (message.fix) {
+                        const paddingIndex = raw.indexOf(code);
+                        const fixedRange = message.fix.range;
+                        const fixedText = message.fix.text;
+                        const fixedWithPadding = [fixedRange[0] + paddingIndex, fixedRange[1] + paddingIndex];
+                        report(node, new RuleError(`${message.ruleId}: ${message.message}`, {
+                            line: message.line,
+                            column: message.column - 1,
+                            fix: fixer.replaceTextRange(fixedWithPadding, fixedText)
+                        }));
+                    } else {
+                        report(node, new RuleError(`${message.ruleId}: ${message.message}`, {
+                            line: message.line,
+                            column: message.column - 1
+                        }));
+                    }
+
                 });
             });
         }
     }
+};
+module.exports = {
+    linter: reporter,
+    fixer: reporter
 };
