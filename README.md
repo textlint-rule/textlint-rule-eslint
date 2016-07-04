@@ -1,4 +1,5 @@
-# textlint-rule-eslint
+# textlint-rule-eslint [![Build Status](https://travis-ci.org/azu/textlint-rule-eslint.svg?branch=master)](https://travis-ci.org/azu/textlint-rule-eslint) [![textlint fixable rule](https://img.shields.io/badge/textlint-fixable-green.svg?style=social)](https://textlint.github.io/)
+
 
 [textlint](https://textlint.github.io/ "textlint official site") rule integrate with ESLint.
 
@@ -80,6 +81,14 @@ textlint --rule eslint README.md
     }
 }
 ```
+
+## Fixable
+
+`textlint-rule-eslint support` `--fix` option.
+
+[![textlint rule](https://img.shields.io/badge/textlint-fixable-green.svg?style=social)](https://textlint.github.io/)
+
+See [https://github.com/textlint/textlint/#fixable](https://github.com/textlint/textlint/#fixable) for more details.
 
 ## Changelog
 
