@@ -17,7 +17,7 @@ const reporter = (context, options) => {
     const filePath = context.getFilePath();
     const textlintRcFilePath = context.config ? context.config.configFile : null;
     const textlintRCDir = textlintRcFilePath ? path.dirname(textlintRcFilePath) : process.cwd();
-    const extname = path.extname(filePath);
+    const extname = filePath ? path.extname(filePath) : undefined;
     const ESLintOptions = {
         configFile: path.resolve(textlintRCDir, options.configFile)
     };
