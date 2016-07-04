@@ -1,8 +1,10 @@
 // LICENSE : MIT
 "use strict";
+import rule from "../src/textlint-rule-eslint";
+const path = require("path");
 const TextLintTester = require("textlint-tester");
 const tester = new TextLintTester();
-import rule from "../src/textlint-rule-eslint";
+const configFilePath = path.join(__dirname, "fixtures/style.eslintconfig.js");
 const WrongCode1 = "var a = 1";
 const WrongCode2 = "var a = 1; var b = 2";
 tester.run("textlint-rule-eslint", rule, {
@@ -10,7 +12,7 @@ tester.run("textlint-rule-eslint", rule, {
         {
             text: "`var a = 1;`",
             options: {
-                configFile: __dirname + "/fixtures/style.eslintconfig.js"
+                configFile: configFilePath
             }
         }
     ],
@@ -30,7 +32,7 @@ tester.run("textlint-rule-eslint", rule, {
                 }
             ],
             options: {
-                configFile: __dirname + "/fixtures/style.eslintconfig.js"
+                configFile: configFilePath
             }
         },
         // multiple
@@ -61,7 +63,7 @@ tester.run("textlint-rule-eslint", rule, {
                 }
             ],
             options: {
-                configFile: __dirname + "/fixtures/style.eslintconfig.js"
+                configFile: configFilePath
             }
         }
     ]
