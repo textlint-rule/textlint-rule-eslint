@@ -17,7 +17,6 @@ const reporter = (context, options) => {
     const filePath = context.getFilePath();
     const textlintRcFilePath = context.config ? context.config.configFile : null;
     const textlintRCDir = textlintRcFilePath ? path.dirname(textlintRcFilePath) : process.cwd();
-    const extname = filePath ? path.extname(filePath) : undefined;
     const ESLintOptions = {
         configFile: path.resolve(textlintRCDir, options.configFile)
     };
@@ -29,7 +28,7 @@ const reporter = (context, options) => {
             }
             const raw = getSource(node);
             const code = node.value;
-            const resultLinting = engine.executeOnText(code, extname);
+            const resultLinting = engine.executeOnText(code, node.lang);
             if (resultLinting.errorCount === 0) {
                 return;
             }
