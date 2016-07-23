@@ -19,6 +19,21 @@ tester.run("textlint-rule-eslint", rule, {
     invalid: [
         {
             text: "```js\n" +
+            "+++1+++\n" +
+            "```",
+            errors: [
+                {
+                    message: "Parsing error: Assigning to rvalue",
+                    line: 2,
+                    column: 4
+                }
+            ],
+            options: {
+                configFile: configFilePath
+            }
+        },
+        {
+            text: "```js\n" +
             WrongCode1 + "\n" +
             "```",
             output: "```js\n" +

@@ -14,7 +14,6 @@ const reporter = (context, options) => {
         throw new Error(`Require options: { "configFile": "path/to/.eslintrc" }`);
     }
     const availableLang = options.langs || defaultOptions.langs;
-    const filePath = context.getFilePath();
     const textlintRcFilePath = context.config ? context.config.configFile : null;
     const textlintRCDir = textlintRcFilePath ? path.dirname(textlintRcFilePath) : process.cwd();
     const ESLintOptions = {
@@ -43,18 +42,19 @@ const reporter = (context, options) => {
 
                      ESLint message line and column start with 1
                      */
+                    const prefix = message.ruleId ? `${message.ruleId}: ` : "";
                     if (message.fix) {
                         const paddingIndex = raw.indexOf(code);
                         const fixedRange = message.fix.range;
                         const fixedText = message.fix.text;
                         const fixedWithPadding = [fixedRange[0] + paddingIndex, fixedRange[1] + paddingIndex];
-                        report(node, new RuleError(`${message.ruleId}: ${message.message}`, {
+                        report(node, new RuleError(`${prefix}${message.message}`, {
                             line: message.line,
                             column: message.column - 1,
                             fix: fixer.replaceTextRange(fixedWithPadding, fixedText)
                         }));
                     } else {
-                        report(node, new RuleError(`${message.ruleId}: ${message.message}`, {
+                        report(node, new RuleError(`${prefix}${message.message}`, {
                             line: message.line,
                             column: message.column - 1
                         }));
