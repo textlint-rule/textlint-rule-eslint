@@ -14,7 +14,15 @@ tester.run("textlint-rule-eslint", rule, {
             options: {
                 configFile: configFilePath
             }
-        }
+        },
+        {
+            text: "```js\n" +
+            "var a = 1;\n" +
+            "```",
+            options: {
+                   configFile: configFilePath
+            }
+        },
     ],
     invalid: [
         {

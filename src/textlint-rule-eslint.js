@@ -26,7 +26,7 @@ const reporter = (context, options) => {
                 return;
             }
             const raw = getSource(node);
-            const code = node.value;
+            const code = node.value + '\n';
             const resultLinting = engine.executeOnText(code, node.lang);
             if (resultLinting.errorCount === 0) {
                 return;
