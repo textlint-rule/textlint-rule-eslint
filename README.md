@@ -67,6 +67,7 @@ textlint --rule eslint README.md
     - **Required**
     - path to .eslintrc file
 - `langs`: `string[]`
+    - Default: `["js", "javascript", "node", "jsx"]`
     - recognize lang of CodeBlock
 
 ```js
