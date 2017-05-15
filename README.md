@@ -37,7 +37,7 @@ Sometimes, we want to write broken JavaScript code into JS CodeBlock for Syntax 
 
 Install with [npm](https://www.npmjs.com/):
 
-    npm install textlint-rule-eslint
+    npm install textlint-rule-eslint eslint
 
 ## Usage
 
