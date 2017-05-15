@@ -1,14 +1,13 @@
 # textlint-rule-eslint [![Build Status](https://travis-ci.org/azu/textlint-rule-eslint.svg?branch=master)](https://travis-ci.org/azu/textlint-rule-eslint) [![textlint fixable rule](https://img.shields.io/badge/textlint-fixable-green.svg?style=social)](https://textlint.github.io/)
 
 
-[textlint](https://textlint.github.io/ "textlint official site") rule integrate with ESLint.
+[textlint](https://textlint.github.io/ "textlint official site") rule to lint JavaScript in Markdown with ESLint.
 
-## UseCase
+## Use case
 
-ESLint can lint markdown file using [eslint/eslint-plugin-markdown](https://github.com/eslint/eslint-plugin-markdown "eslint/eslint-plugin-markdown").
-But, eslint-plugin-markdown don't support disabling Markdown(HTML) comment for ignoring some CodeBlock.
+ESLint can lint Markdown files using [eslint-plugin-markdown](https://github.com/eslint/eslint-plugin-markdown "eslint/eslint-plugin-markdown"). But eslint-plugin-markdown doesn't support disabling Markdown (HTML) comments for ignoring some CodeBlocks.
 
-[textlint](https://textlint.github.io/ "textlint official site") can filter specified CodeBlock using [textlint-filter-rule-comments](https://github.com/textlint/textlint-filter-rule-comments "textlint-filter-rule-comments").
+[textlint](https://textlint.github.io/ "textlint official site") can filter some CodeBlocks using [textlint-filter-rule-comments](https://github.com/textlint/textlint-filter-rule-comments "textlint-filter-rule-comments"):
 
     <!-- textlint-disable -->
 
@@ -19,7 +18,7 @@ But, eslint-plugin-markdown don't support disabling Markdown(HTML) comment for i
     <!-- textlint-enable -->
 
 
-Sometimes, we want to write broken JavaScript code into JS CodeBlock for Syntax Highlight.
+Sometimes, we want to write broken JavaScript code into a JS CodeBlock for syntax highlight:
 
 
     This is error example of parsing:
@@ -33,7 +32,7 @@ Sometimes, we want to write broken JavaScript code into JS CodeBlock for Syntax 
 
     <!-- textlint-enable eslint -->
 
-## Install
+## Installation
 
 Install with [npm](https://www.npmjs.com/):
 
@@ -42,7 +41,7 @@ Install with [npm](https://www.npmjs.com/):
 ## Usage
 
 
-Via `.textlintrc`(Recommended)
+Via `.textlintrc` (recommended):
 
 ```js
 {
@@ -55,7 +54,7 @@ Via `.textlintrc`(Recommended)
 }
 ```
 
-Via CLI
+Via CLI:
 
 ```
 textlint --rule eslint README.md
