@@ -2,6 +2,7 @@
 "use strict";
 module.exports = {
     rules: {
+        "eol-last": ["error", "always"],
         "indent": ["error", 4, {
             "SwitchCase": 1
         }],
