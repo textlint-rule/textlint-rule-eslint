@@ -26,7 +26,8 @@ const reporter = (context, options) => {
                 return;
             }
             const raw = getSource(node);
-            const code = node.value + '\n';
+            const code = getUntrimmedCode(node, raw);
+
             const resultLinting = engine.executeOnText(code, node.lang);
             if (resultLinting.errorCount === 0) {
                 return;
@@ -65,6 +66,34 @@ const reporter = (context, options) => {
         }
     }
 };
+
+/**
+ * get actual code value from CodeBlock node
+ * @param {Object} node
+ * @param {string} raw raw value include CodeBlock syntax
+ * @returns {string}
+ */
+function getUntrimmedCode(node, raw) {
+    if (node.type !== "CodeBlock") {
+        return node.value
+    }
+
+    // Space indented CodeBlock that has not lang
+    if (!node.lang) {
+        return node.value;
+    }
+
+    // https://github.com/wooorm/remark/issues/207#issuecomment-244620590
+    const lines = raw.split("\n");
+    
+    // code lines without the first line and the last line
+    const codeLines = lines.slice(1, lines.length - 1);
+    
+    // add last new line
+    // \n```
+    return codeLines.join("\n") + "\n";
+}
+
 module.exports = {
     linter: reporter,
     fixer: reporter

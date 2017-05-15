@@ -23,6 +23,14 @@ tester.run("textlint-rule-eslint", rule, {
                    configFile: configFilePath
             }
         },
+        {
+            text: "```js\n\n" +
+            "var a = 1;\n\n" +
+            "```",
+            options: {
+                   configFile: configFilePath
+            }
+        },
     ],
     invalid: [
         {
