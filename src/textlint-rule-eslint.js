@@ -8,20 +8,30 @@ const defaultOptions = {
     // recognize lang of CodeBlock
     "langs": ["js", "javascript", "node", "jsx"]
 };
+const getConfigBaseDir = (context) => {
+    if (typeof context.getConfigBaseDir === "function") {
+        return context.getConfigBaseDir();
+    }
+    // Fallback that use deprecated `config` value
+    // https://github.com/textlint/textlint/issues/294
+    const textlintRcFilePath = context.config ? context.config.configFile : null;
+    // .textlinrc directory
+    return textlintRcFilePath ? path.dirname(textlintRcFilePath) : process.cwd();
+};
+
 const reporter = (context, options) => {
-    const {Syntax, RuleError, report, fixer, getSource} = context;
+    const { Syntax, RuleError, report, fixer, getSource } = context;
     if (!options.configFile) {
         throw new Error(`Require options: { "configFile": "path/to/.eslintrc" }`);
     }
     const availableLang = options.langs || defaultOptions.langs;
-    const textlintRcFilePath = context.config ? context.config.configFile : null;
-    const textlintRCDir = textlintRcFilePath ? path.dirname(textlintRcFilePath) : process.cwd();
+    const textlintRCDir = getConfigBaseDir(context);
     const ESLintOptions = {
         configFile: path.resolve(textlintRCDir, options.configFile)
     };
     const engine = new CLIEngine(ESLintOptions);
     return {
-        [Syntax.CodeBlock](node){
+        [Syntax.CodeBlock](node) {
             if (availableLang.indexOf(node.lang) === -1) {
                 return;
             }
@@ -85,10 +95,10 @@ function getUntrimmedCode(node, raw) {
 
     // https://github.com/wooorm/remark/issues/207#issuecomment-244620590
     const lines = raw.split("\n");
-    
+
     // code lines without the first line and the last line
     const codeLines = lines.slice(1, lines.length - 1);
-    
+
     // add last new line
     // \n```
     return codeLines.join("\n") + "\n";
