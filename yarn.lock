@@ -197,7 +197,7 @@ aws4@^1.2.1:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
 
-babel-cli@^6.26.0:
+babel-cli@6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-cli/-/babel-cli-6.26.0.tgz#502ab54874d7db88ad00b887a06383ce03d002f1"
   dependencies:
@@ -583,7 +583,7 @@ babel-polyfill@^6.26.0:
     core-js "^2.5.0"
     regenerator-runtime "^0.10.5"
 
-babel-preset-es2015@^6.9.0:
+babel-preset-es2015@6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-preset-es2015/-/babel-preset-es2015-6.24.1.tgz#d44050d6bc2c9feea702aaf38d727a0210538939"
   dependencies:
@@ -612,20 +612,20 @@ babel-preset-es2015@^6.9.0:
     babel-plugin-transform-es2015-unicode-regex "^6.24.1"
     babel-plugin-transform-regenerator "^6.24.1"
 
-babel-preset-jsdoc-to-assert@^4.0.0:
+babel-preset-jsdoc-to-assert@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/babel-preset-jsdoc-to-assert/-/babel-preset-jsdoc-to-assert-4.0.0.tgz#200151d3cda8ee722c69dfdee39bde7d914727d6"
   dependencies:
     babel-plugin-jsdoc-to-assert "^3.0.1"
 
-babel-preset-power-assert@^1.0.0:
+babel-preset-power-assert@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/babel-preset-power-assert/-/babel-preset-power-assert-1.0.0.tgz#cd77a38d9a5f8da85ae093d69fac7cde4d2e8089"
   dependencies:
     babel-plugin-empower-assert "^1.2.0"
     babel-plugin-espower "^2.1.2"
 
-babel-register@^6.26.0:
+babel-register@6.26.0, babel-register@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-register/-/babel-register-6.26.0.tgz#6ed021173e2fcb486d7acb45c6009a856f647071"
   dependencies:
@@ -1139,7 +1139,7 @@ eslint-scope@^3.7.1:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint@^4.7.2:
+eslint@4.7.2:
   version "4.7.2"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.7.2.tgz#ff6f5f5193848a27ee9b627be3e73fb9cb5e662e"
   dependencies:
@@ -2094,7 +2094,7 @@ mkdirp@0.5.1, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
-mocha@^3.5.3:
+mocha@3.5.3:
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/mocha/-/mocha-3.5.3.tgz#1e0480fe36d2da5858d1eb6acc38418b26eaa20d"
   dependencies:
@@ -2402,7 +2402,7 @@ power-assert-util-string-width@^1.1.1:
   dependencies:
     eastasianwidth "^0.1.1"
 
-power-assert@^1.4.4:
+power-assert@1.4.4:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/power-assert/-/power-assert-1.4.4.tgz#9295ea7437196f5a601fde420f042631186d7517"
   dependencies:
@@ -2954,7 +2954,7 @@ textlint-plugin-text@^1.1.4:
   dependencies:
     txt-to-ast "^1.1.0"
 
-textlint-tester@^2.2.4:
+textlint-tester@2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/textlint-tester/-/textlint-tester-2.2.4.tgz#d3e0a32068010a497e77c6ab91577024df5a4148"
   dependencies:
