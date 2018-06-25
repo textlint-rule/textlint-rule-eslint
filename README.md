@@ -1,4 +1,4 @@
-# textlint-rule-eslint [![Build Status](https://travis-ci.org/azu/textlint-rule-eslint.svg?branch=master)](https://travis-ci.org/azu/textlint-rule-eslint) [![textlint fixable rule](https://img.shields.io/badge/textlint-fixable-green.svg?style=social)](https://textlint.github.io/)
+# textlint-rule-eslint [![Build Status](https://travis-ci.org/textlint-rule/textlint-rule-eslint.svg?branch=master)](https://travis-ci.org/textlint-rule/textlint-rule-eslint) [![textlint fixable rule](https://img.shields.io/badge/textlint-fixable-green.svg?style=social)](https://textlint.github.io/)
 
 
 [textlint](https://textlint.github.io/ "textlint official site") rule to lint JavaScript in Markdown with ESLint.
@@ -92,7 +92,7 @@ See [https://github.com/textlint/textlint/#fixable](https://github.com/textlint/
 
 ## Changelog
 
-See [Releases page](https://github.com/azu/textlint-rule-eslint/releases).
+See [Releases page](https://github.com/textlint-rule/textlint-rule-eslint/releases).
 
 ## Running tests
 
@@ -104,7 +104,7 @@ Install devDependencies and Run `npm test`:
 
 Pull requests and stars are always welcome.
 
-For bugs and feature requests, [please create an issue](https://github.com/azu/textlint-rule-eslint/issues).
+For bugs and feature requests, [please create an issue](https://github.com/textlint-rule/textlint-rule-eslint/issues).
 
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`

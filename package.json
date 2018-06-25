@@ -2,14 +2,14 @@
   "name": "textlint-rule-eslint",
   "repository": {
     "type": "git",
-    "url": "https://github.com/azu/textlint-rule-eslint.git"
+    "url": "https://github.com/textlint-rule/textlint-rule-eslint.git"
   },
   "author": "azu",
   "email": "azuciao@gmail.com",
-  "homepage": "https://github.com/azu/textlint-rule-eslint",
+  "homepage": "https://github.com/textlint-rule/textlint-rule-eslint",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/azu/textlint-rule-eslint/issues"
+    "url": "https://github.com/textlint-rule/textlint-rule-eslint/issues"
   },
   "files": [
     "src/",
