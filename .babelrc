@@ -1,12 +1,11 @@
 {
   "presets": [
-    "es2015"
+    "@babel/preset-env"
   ],
   "env": {
     "development": {
       "presets": [
-        "jsdoc-to-assert",
-        "power-assert"
+        "jsdoc-to-assert"
       ]
     }
   }
