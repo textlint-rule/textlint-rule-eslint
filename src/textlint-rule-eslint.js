@@ -53,6 +53,10 @@ const reporter = (context, options) => {
 
                      ESLint message line and column start with 1
                      */
+                    if (options.ignoreParsingErrors && message.message.includes("Parsing error")) {
+                      return;
+                    }
+
                     const prefix = message.ruleId ? `${message.ruleId}: ` : "";
                     if (message.fix) {
                         const paddingIndex = raw.indexOf(code);

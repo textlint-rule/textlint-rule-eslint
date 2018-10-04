@@ -32,6 +32,19 @@ Sometimes, we want to write broken JavaScript code into a JS CodeBlock for synta
 
     <!-- textlint-enable eslint -->
 
+To ignore ESLint parsing errors that cannot be ignored from the config file, you can use `ignoreParsingErrors`:
+
+```js
+{
+    "rules": {
+        "eslint": {
+          "configFile": "path/to/.eslintrc"
+          "ignoreParsingErrors": true
+        }
+    }
+}
+```
+
 ## Installation
 
 Install with [npm](https://www.npmjs.com/):
@@ -68,6 +81,9 @@ textlint --rule eslint README.md
 - `langs`: `string[]`
     - Default: `["js", "javascript", "node", "jsx"]`
     - recognize lang of CodeBlock
+- `ignoreParsingErrors`: `Boolean`
+    - Default: `false`
+    - ignore ESLint parsing errors while still reporting other ESLint errors
 
 ```js
 {
@@ -77,6 +93,8 @@ textlint --rule eslint README.md
             "configFile": "path/to/.eslintrc",
             // recognize lang of CodeBlock
             "langs": ["js", "javascript", "node", "jsx"]
+            // Ignore ESLint parsing errors
+            "ignoreParsingErrors": true
         }
     }
 }
