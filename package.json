@@ -22,9 +22,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha test/",
-    "build": "NODE_ENV=production babel src --out-dir lib --source-maps",
-    "watch": "babel src --out-dir lib --watch --source-maps",
+    "test": "textlint-scripts test",
+    "build": "textlint-scripts build",
+    "watch": "textlint-scripts build --watch",
     "prepublish": "npm run --if-present build"
   },
   "keywords": [
@@ -32,14 +32,8 @@
     "textlint"
   ],
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/register": "^7.0.0",
-    "babel-preset-jsdoc-to-assert": "5.0.0",
     "eslint": "5.6.1",
-    "mocha": "5.2.0",
-    "textlint-tester": "5.0.0"
+    "textlint-scripts": "^2.1.0"
   },
   "peerDependencies": {
     "eslint": "^3.0.0 || ^4.0.0 || ^5.0.0"
