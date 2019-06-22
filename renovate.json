@@ -1,8 +1,5 @@
 {
   "extends": [
-    "config:base"
-  ],
-  "devDependencies": {
-    "automerge": true
-  }
+    "@azu"
+  ]
 }
