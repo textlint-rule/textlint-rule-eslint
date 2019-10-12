@@ -1,7 +1,8 @@
 // LICENSE : MIT
 "use strict";
-const CLIEngine = require("eslint").CLIEngine;
 const path = require("path");
+const Source = require("structured-source");
+const CLIEngine = require("eslint").CLIEngine;
 const defaultOptions = {
     // path to .eslintrc file
     "configFile": null,
@@ -37,7 +38,7 @@ const reporter = (context, options) => {
             }
             const raw = getSource(node);
             const code = getUntrimmedCode(node, raw);
-
+            const source = new Source(code);
             const resultLinting = engine.executeOnText(code, node.lang);
             if (resultLinting.errorCount === 0) {
                 return;
@@ -54,24 +55,33 @@ const reporter = (context, options) => {
                      ESLint message line and column start with 1
                      */
                     if (options.ignoreParsingErrors && message.message.includes("Parsing error")) {
-                      return;
+                        return;
                     }
 
                     const prefix = message.ruleId ? `${message.ruleId}: ` : "";
                     if (message.fix) {
-                        const paddingIndex = raw.indexOf(code);
                         const fixedRange = message.fix.range;
                         const fixedText = message.fix.text;
-                        const fixedWithPadding = [fixedRange[0] + paddingIndex, fixedRange[1] + paddingIndex];
-                        report(node, new RuleError(`${prefix}${message.message}`, {
+                        const sourceBlockDiffIndex = (raw !== node.value) ? raw.indexOf(code) : 0;
+                        const fixedWithPadding = [fixedRange[0] + sourceBlockDiffIndex, fixedRange[1] + sourceBlockDiffIndex];
+                        const index = source.positionToIndex({
                             line: message.line,
-                            column: message.column - 1,
+                            column: message.column
+                        });
+                        const adjustedIndex = index + sourceBlockDiffIndex - 1;
+                        report(node, new RuleError(`${prefix}${message.message}`, {
+                            index: adjustedIndex,
                             fix: fixer.replaceTextRange(fixedWithPadding, fixedText)
                         }));
                     } else {
-                        report(node, new RuleError(`${prefix}${message.message}`, {
+                        const sourceBlockDiffIndex = (raw !== node.value) ? raw.indexOf(code) : 0;
+                        const index = source.positionToIndex({
                             line: message.line,
-                            column: message.column - 1
+                            column: message.column
+                        });
+                        const adjustedIndex = index + sourceBlockDiffIndex - 1;
+                        report(node, new RuleError(`${prefix}${message.message}`, {
+                            index: adjustedIndex
                         }));
                     }
 
@@ -82,7 +92,7 @@ const reporter = (context, options) => {
 };
 
 /**
- * get actual code value from CodeBlock node
+ * [Markdown] get actual code value from CodeBlock node
  * @param {Object} node
  * @param {string} raw raw value include CodeBlock syntax
  * @returns {string}
@@ -91,18 +101,23 @@ function getUntrimmedCode(node, raw) {
     if (node.type !== "CodeBlock") {
         return node.value
     }
-
     // Space indented CodeBlock that has not lang
     if (!node.lang) {
         return node.value;
     }
 
+    // If it is not markdown codeBlock, just use node.value
+    if (!(raw.startsWith("```") && raw.endsWith("```"))) {
+        if (node.value.endsWith("\n")) {
+            return node.value
+        }
+        return node.value + "\n";
+    }
+    // Markdown(remark) specific hack
     // https://github.com/wooorm/remark/issues/207#issuecomment-244620590
     const lines = raw.split("\n");
-
     // code lines without the first line and the last line
     const codeLines = lines.slice(1, lines.length - 1);
-
     // add last new line
     // \n```
     return codeLines.join("\n") + "\n";
