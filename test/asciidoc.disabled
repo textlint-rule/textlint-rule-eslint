@@ -1,0 +1,68 @@
+// LICENSE : MIT
+"use strict";
+import rule from "../src/textlint-rule-eslint";
+const path = require("path");
+const TextLintTester = require("textlint-tester");
+const asciidoctorPlugin = require("textlint-plugin-asciidoctor");
+const tester = new TextLintTester();
+const configFilePath = path.join(__dirname, "fixtures/style.eslintconfig.js");
+tester.run("textlint-rule-eslint with asciidoctor plugin", {
+    plugins: [
+        {
+            pluginId: "asciidoc",
+            plugin: asciidoctorPlugin,
+        }
+    ],
+    rules: [
+        {
+            ruleId: "eslint",
+            rule: rule,
+            options: {
+                configFile: configFilePath
+            }
+        }
+    ]
+}, {
+    valid: [
+        {
+            text: `
+[role="executable"]
+[source,javascript]
+.thenコード例
+----
+var promise = new Promise(function(resolve, reject) {
+    resolve("thenに渡す値");
+});
+promise.then(function(value) {
+    console.log(value);
+}, function(error) {
+    console.error(error);
+});
+----
+`,
+            ext: ".adoc",
+
+        }
+    ],
+    invalid: [
+        {
+            text: `
+[source,javascript]
+----
+var a = 1
+----
+`,
+            output: `
+[source,javascript]
+----
+var a = 1;
+----
+`,
+            ext: ".adoc",
+            errors: [{
+                index: 35
+            }]
+        }
+    ]
+
+});

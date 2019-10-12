@@ -1,6 +1,7 @@
 // LICENSE : MIT
 "use strict";
 import rule from "../src/textlint-rule-eslint";
+
 const path = require("path");
 const TextLintTester = require("textlint-tester");
 const tester = new TextLintTester();
@@ -17,35 +18,35 @@ tester.run("textlint-rule-eslint", rule, {
         },
         {
             text: "```js\n" +
-            "var a = 1;\n" +
-            "```",
+                "var a = 1;\n" +
+                "```",
             options: {
-                   configFile: configFilePath
+                configFile: configFilePath
             }
         },
         {
             text: "```js\n\n" +
-            "var a = 1;\n\n" +
-            "```",
+                "var a = 1;\n\n" +
+                "```",
             options: {
-                   configFile: configFilePath
+                configFile: configFilePath
             }
         },
         {
             text: "```js\n\n" +
-            "+++1+++\n" +
-            "```",
+                "+++1+++\n" +
+                "```",
             options: {
-                   configFile: configFilePath,
-                   ignoreParsingErrors: true
+                configFile: configFilePath,
+                ignoreParsingErrors: true
             }
         },
     ],
     invalid: [
         {
             text: "```js\n" +
-            "+++1+++\n" +
-            "```",
+                "+++1+++\n" +
+                "```",
             errors: [
                 {
                     message: "Parsing error: Assigning to rvalue",
@@ -59,11 +60,11 @@ tester.run("textlint-rule-eslint", rule, {
         },
         {
             text: "```js\n" +
-            WrongCode1 + "\n" +
-            "```",
+                WrongCode1 + "\n" +
+                "```",
             output: "```js\n" +
-            WrongCode1 + ";\n" +
-            "```",
+                WrongCode1 + ";\n" +
+                "```",
             errors: [
                 {
                     message: "semi: Missing semicolon.",
@@ -75,22 +76,47 @@ tester.run("textlint-rule-eslint", rule, {
                 configFile: configFilePath
             }
         },
+        {
+            text: "```javascript\n" +
+                "var a = 1\n" +
+                "var b = 2\n" +
+                "```",
+            output: "```javascript\n" +
+                "var a = 1;\n" +
+                "var b = 2;\n" +
+                "```",
+            errors: [
+                {
+                    message: "semi: Missing semicolon.",
+                    line: 2,
+                    column: 10
+                },
+                {
+                    message: "semi: Missing semicolon.",
+                    line: 3,
+                    column: 10
+                }
+            ],
+            options: {
+                configFile: configFilePath
+            }
+        },
         // multiple
         {
             text: "```js\n" +
-            WrongCode1 + "\n" +
-            "```\n" +
-            "This is text.\n" +
-            "```js\n" +
-            WrongCode2 + "\n" +
-            "```",
+                WrongCode1 + "\n" +
+                "```\n" +
+                "This is text.\n" +
+                "```js\n" +
+                WrongCode2 + "\n" +
+                "```",
             output: "```js\n" +
-            WrongCode1 + ";\n" +
-            "```\n" +
-            "This is text.\n" +
-            "```js\n" +
-            WrongCode2 + ";\n" +
-            "```",
+                WrongCode1 + ";\n" +
+                "```\n" +
+                "This is text.\n" +
+                "```js\n" +
+                WrongCode2 + ";\n" +
+                "```",
             errors: [
                 {
                     message: "semi: Missing semicolon.",
