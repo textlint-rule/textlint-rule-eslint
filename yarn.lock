@@ -3688,10 +3688,10 @@ text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
-textlint-plugin-asciidoctor@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/textlint-plugin-asciidoctor/-/textlint-plugin-asciidoctor-1.0.3.tgz#a326bae07ae31a3dc6811fa053b4bc661e30cb3e"
-  integrity sha512-T9ZLVLTRMNaAVO5MV9+6IS9q4gYtZTOlaCeCl+VNP55pseTYMmkQwsKd+XnPdu3WLqTSZcqLizG5H5bHysg0dw==
+textlint-plugin-asciidoctor@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/textlint-plugin-asciidoctor/-/textlint-plugin-asciidoctor-1.1.0.tgz#c52b889dc9285585d3f9c83c1c8f121c23ad007c"
+  integrity sha512-0cSs+1TbOb5hrn/sBE1LtMJLgtJn/7JdxZdYAqepRYehBsBHa/V1tkS9oKiTk0f+EoNvT9wmTbx4ltcvxMNvnw==
   dependencies:
     asciidoctor.js "^1.5.9"
 
