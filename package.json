@@ -34,7 +34,7 @@
   "devDependencies": {
     "@types/structured-source": "^3.0.0",
     "eslint": "6.5.1",
-    "textlint-scripts": "^3.0.0",
+    "textlint-scripts": "^12.0.1",
     "textlint-plugin-asciidoctor": "^1.1.0"
   },
   "peerDependencies": {
