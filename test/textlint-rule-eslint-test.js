@@ -3,7 +3,7 @@
 import rule from "../src/textlint-rule-eslint";
 
 const path = require("path");
-const TextLintTester = require("textlint-tester");
+import TextLintTester from "textlint-tester";
 const tester = new TextLintTester();
 const configFilePath = path.join(__dirname, "fixtures/style.eslintconfig.js");
 const WrongCode1 = "var a = 1";
