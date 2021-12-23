@@ -1,4 +1,4 @@
-# textlint-rule-eslint [![Actions Status: test](https://github.com/textlint-rule/textlint-rule-eslint.svg?branch=master)](https://travis-ci.org/textlint-rule/textlint-rule-eslint) [![textlint fixable rule](https://img.shields.io/badge/textlint-fixable-green/workflows/test/badge.svg)](https://github.com/textlint-rule/textlint-rule-eslint.svg?branch=master)](https://travis-ci.org/textlint-rule/textlint-rule-eslint) [![textlint fixable rule](https://img.shields.io/badge/textlint-fixable-green/actions?query=workflow%3A"test")
+# textlint-rule-eslint [![Actions Status: test](https://github.com/textlint-rule/textlint-rule-eslint.svg?branch=master)](https://travis-ci.org/textlint-rule/textlint-rule-eslint)
 
 
 [textlint](https://textlint.github.io/ "textlint official site") rule to lint JavaScript in Markdown with ESLint.
