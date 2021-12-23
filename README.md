@@ -34,7 +34,7 @@ Sometimes, we want to write broken JavaScript code into a JS CodeBlock for synta
 
 To ignore ESLint parsing errors that cannot be ignored from the config file, you can use `ignoreParsingErrors`:
 
-```js
+```json5
 {
     "rules": {
         "eslint": {
@@ -51,12 +51,14 @@ Install with [npm](https://www.npmjs.com/):
 
     npm install textlint-rule-eslint eslint
 
+:warning: textlint-rule-eslint 4+ requires eslint 8+.
+
 ## Usage
 
 
 Via `.textlintrc` (recommended):
 
-```js
+```json5
 {
     "rules": {
         "eslint": {
@@ -85,7 +87,7 @@ textlint --rule eslint README.md
     - Default: `false`
     - ignore ESLint parsing errors while still reporting other ESLint errors
 
-```js
+```json5
 {
     "rules": {
         "eslint": {
