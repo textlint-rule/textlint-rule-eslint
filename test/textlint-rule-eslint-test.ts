@@ -1,13 +1,13 @@
 // LICENSE : MIT
 "use strict";
 import rule from "../src/textlint-rule-eslint";
-
-const path = require("path");
 import TextLintTester from "textlint-tester";
+import path from "path";
 const tester = new TextLintTester();
 const configFilePath = path.join(__dirname, "fixtures/style.eslintconfig.js");
 const WrongCode1 = "var a = 1";
 const WrongCode2 = "var a = 1; var b = 2";
+// @ts-expect-error
 tester.run("textlint-rule-eslint", rule, {
     valid: [
         {

@@ -1,15 +1,17 @@
 // LICENSE : MIT
 "use strict";
-const path = require("path");
-const Source = require("structured-source");
-const CLIEngine = require("eslint").CLIEngine;
+import path from "path";
+import type { TextlintRuleContext, TextlintRuleModule } from "@textlint/types"
+import Source from "structured-source";
+import { ESLint } from "eslint";
+
 const defaultOptions = {
     // path to .eslintrc file
     "configFile": null,
     // recognize lang of CodeBlock
     "langs": ["js", "javascript", "node", "jsx"]
 };
-const getConfigBaseDir = (context) => {
+const getConfigBaseDir = (context: TextlintRuleContext & { config?: any }) => {
     if (typeof context.getConfigBaseDir === "function") {
         return context.getConfigBaseDir();
     }
@@ -20,31 +22,40 @@ const getConfigBaseDir = (context) => {
     return textlintRcFilePath ? path.dirname(textlintRcFilePath) : process.cwd();
 };
 
-const reporter = (context, options) => {
-    const { Syntax, RuleError, report, fixer, getSource } = context;
+export type Options = {
+    configFile: string;
+    langs: string[]
+}
+const reporter: TextlintRuleModule<Options> = (context, options) => {
+    const { Syntax, RuleError, report, fixer, getSource, getFilePath} = context;
+    if (!options) {
+        throw new Error(`Require options: { "configFile": "path/to/.eslintrc" }`);
+    }
     if (!options.configFile) {
         throw new Error(`Require options: { "configFile": "path/to/.eslintrc" }`);
     }
     const availableLang = options.langs || defaultOptions.langs;
     const textlintRCDir = getConfigBaseDir(context);
-    const ESLintOptions = {
-        configFile: path.resolve(textlintRCDir, options.configFile)
-    };
-    const engine = new CLIEngine(ESLintOptions);
+    const esLintConfigFilePath = textlintRCDir ? path.resolve(textlintRCDir, options.configFile) : options.configFile;
+    const engine = new ESLint({
+        useEslintrc: false,
+        overrideConfigFile: esLintConfigFilePath
+    });
     return {
-        [Syntax.CodeBlock](node) {
+        async [Syntax.CodeBlock](node) {
             if (availableLang.indexOf(node.lang) === -1) {
                 return;
             }
             const raw = getSource(node);
             const code = getUntrimmedCode(node, raw);
             const source = new Source(code);
-            const resultLinting = engine.executeOnText(code, node.lang);
-            if (resultLinting.errorCount === 0) {
+            const resultLinting = await engine.lintText(code, {
+                filePath: `test.${node.lang}`
+            });
+            if (resultLinting.length === 0) {
                 return;
             }
-            const results = resultLinting.results;
-            results.forEach(result => {
+            resultLinting.forEach(result => {
                 result.messages.forEach(message => {
                     /*
 
@@ -63,7 +74,7 @@ const reporter = (context, options) => {
                         const fixedRange = message.fix.range;
                         const fixedText = message.fix.text;
                         const sourceBlockDiffIndex = (raw !== node.value) ? raw.indexOf(code) : 0;
-                        const fixedWithPadding = [fixedRange[0] + sourceBlockDiffIndex, fixedRange[1] + sourceBlockDiffIndex];
+                        const fixedWithPadding = [fixedRange[0] + sourceBlockDiffIndex, fixedRange[1] + sourceBlockDiffIndex] as const;
                         const index = source.positionToIndex({
                             line: message.line,
                             column: message.column
@@ -71,7 +82,7 @@ const reporter = (context, options) => {
                         const adjustedIndex = index + sourceBlockDiffIndex - 1;
                         report(node, new RuleError(`${prefix}${message.message}`, {
                             index: adjustedIndex,
-                            fix: fixer.replaceTextRange(fixedWithPadding, fixedText)
+                            fix: fixer.replaceTextRange(fixedWithPadding as [number, number], fixedText)
                         }));
                     } else {
                         const sourceBlockDiffIndex = (raw !== node.value) ? raw.indexOf(code) : 0;
@@ -97,7 +108,7 @@ const reporter = (context, options) => {
  * @param {string} raw raw value include CodeBlock syntax
  * @returns {string}
  */
-function getUntrimmedCode(node, raw) {
+function getUntrimmedCode(node: any, raw: string) {
     if (node.type !== "CodeBlock") {
         return node.value
     }
@@ -123,7 +134,7 @@ function getUntrimmedCode(node, raw) {
     return codeLines.join("\n") + "\n";
 }
 
-module.exports = {
+export default {
     linter: reporter,
     fixer: reporter
 };
