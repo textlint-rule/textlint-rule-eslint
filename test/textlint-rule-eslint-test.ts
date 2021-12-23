@@ -1,18 +1,14 @@
 // LICENSE : MIT
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const textlint_rule_eslint_js_1 = __importDefault(require("../src/textlint-rule-eslint.js"));
-const textlint_tester_1 = __importDefault(require("textlint-tester"));
-const path_1 = __importDefault(require("path"));
-const tester = new textlint_tester_1.default();
-const configFilePath = path_1.default.join(__dirname, "fixtures/style.eslintconfig.js");
+import rule from "../src/textlint-rule-eslint.js";
+import TextLintTester from "textlint-tester";
+import path from "path";
+const tester = new TextLintTester();
+const configFilePath = path.join(__dirname, "fixtures/style.eslintconfig.js");
 const WrongCode1 = "var a = 1";
 const WrongCode2 = "var a = 1; var b = 2";
 // @ts-expect-error
-tester.run("textlint-rule-eslint", textlint_rule_eslint_js_1.default, {
+tester.run("textlint-rule-eslint", rule, {
     valid: [
         {
             text: "`var a = 1;`",
