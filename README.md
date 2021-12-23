@@ -1,5 +1,4 @@
-# textlint-rule-eslint [![Actions Status: test](https://github.com/textlint-rule/textlint-rule-eslint.svg?branch=master)](https://travis-ci.org/textlint-rule/textlint-rule-eslint)
-
+# textlint-rule-eslint [![Actions Status: test](https://github.com/textlint-rule/textlint-rule-eslint/workflows/test/badge.svg)](https://github.com/textlint-rule/textlint-rule-eslint/actions?query=workflow%3A"test")
 
 [textlint](https://textlint.github.io/ "textlint official site") rule to lint JavaScript in Markdown with ESLint.
 
