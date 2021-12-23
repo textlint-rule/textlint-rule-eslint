@@ -1,6 +1,6 @@
 // LICENSE : MIT
 "use strict";
-import rule from "../src/textlint-rule-eslint.js";
+import rule from "../src/textlint-rule-eslint";
 import TextLintTester from "textlint-tester";
 import path from "path";
 const tester = new TextLintTester();
