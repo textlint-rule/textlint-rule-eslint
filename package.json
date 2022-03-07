@@ -37,16 +37,16 @@
     "@types/structured-source": "^3.0.0",
     "eslint": "8.5.0",
     "textlint-plugin-asciidoctor": "^1.1.0",
-    "textlint-scripts": "^12.1.0",
+    "textlint-scripts": "^12.1.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4",
-    "textlint-tester": "^12.1.0"
+    "textlint-tester": "^12.1.1"
   },
   "peerDependencies": {
     "eslint": "^8.0.0"
   },
   "dependencies": {
-    "@textlint/types": "^12.1.0",
+    "@textlint/types": "^12.1.1",
     "structured-source": "^3.0.2"
   }
 }
