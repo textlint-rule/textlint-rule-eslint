@@ -2,7 +2,7 @@
 "use strict";
 import path from "path";
 import type { TextlintRuleContext, TextlintRuleModule } from "@textlint/types"
-import Source from "structured-source";
+import { StructuredSource } from "structured-source";
 import { ESLint } from "eslint";
 
 const defaultOptions = {
@@ -48,7 +48,7 @@ const reporter: TextlintRuleModule<Options> = (context, options) => {
             }
             const raw = getSource(node);
             const code = getUntrimmedCode(node, raw);
-            const source = new Source(code);
+            const source = new StructuredSource(code);
             const resultLinting = await engine.lintText(code, {
                 filePath: `test.${node.lang}`
             });
