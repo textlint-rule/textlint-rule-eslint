@@ -47,6 +47,6 @@
   },
   "dependencies": {
     "@textlint/types": "^12.3.0",
-    "structured-source": "^3.0.2"
+    "structured-source": "^4.0.0"
   }
 }
