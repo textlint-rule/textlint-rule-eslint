@@ -3849,7 +3849,7 @@ textlint-plugin-asciidoctor@^1.1.0:
   dependencies:
     asciidoctor.js "^1.5.9"
 
-textlint-scripts@^12.3.1:
+textlint-scripts@^12.4.0:
   version "12.5.0"
   resolved "https://registry.yarnpkg.com/textlint-scripts/-/textlint-scripts-12.5.0.tgz#d3c1e5d798eee30599a6b2230bb8cb31d666f0d8"
   integrity sha512-H98q2EYPhvm2B8rR2BreApa+d5IPNwKJT78ettfpXlCUiS9bJkdVd+7fAcwD+FaW8SsPGAWVfbmhzPChJvKm4g==
@@ -3866,7 +3866,7 @@ textlint-scripts@^12.3.1:
     pkg-to-readme "^1.1.2"
     textlint-tester "^12.5.0"
 
-textlint-tester@^12.3.1, textlint-tester@^12.5.0:
+textlint-tester@^12.4.0, textlint-tester@^12.5.0:
   version "12.5.0"
   resolved "https://registry.yarnpkg.com/textlint-tester/-/textlint-tester-12.5.0.tgz#41fcaa5d37b0d171a134af2a6fa88bfc0a34082d"
   integrity sha512-4BKh/eWCc73T6mvBwXz1q53gbzCm+S0iHet2nmOQWF9aEbGkVnLbFbEKNdPiayAJ5tugIdvpfT/5iUb1RXDjeg==
