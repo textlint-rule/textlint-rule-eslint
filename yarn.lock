@@ -1549,7 +1549,7 @@
   dependencies:
     "@textlint/text-to-ast" "^13.0.1"
 
-"@textlint/types@^12.5.2":
+"@textlint/types@^12.6.0":
   version "12.6.1"
   resolved "https://registry.yarnpkg.com/@textlint/types/-/types-12.6.1.tgz#d00c5d625287a113c2807587c2c0cdc1c7f182d8"
   integrity sha512-t1SZYahu2olnF8MUhlP6qDIEDyl7WmyIaBYxQdE2qU6xUkZWXS2zIxoAT/pVgvFCzDw3KO5HhIYGVeWRp90dTg==
