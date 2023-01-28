@@ -46,7 +46,7 @@
     "eslint": "^8.0.0"
   },
   "dependencies": {
-    "@textlint/types": "^12.5.0",
+    "@textlint/types": "^12.5.2",
     "structured-source": "^4.0.0"
   }
 }
