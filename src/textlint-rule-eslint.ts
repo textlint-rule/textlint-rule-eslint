@@ -27,7 +27,7 @@ export type Options = {
     langs: string[]
 }
 const reporter: TextlintRuleModule<Options> = (context, options) => {
-    const { Syntax, RuleError, report, fixer, getSource, getFilePath} = context;
+    const { Syntax, RuleError, report, fixer, getSource, getFilePath } = context;
     if (!options) {
         throw new Error(`Require options: { "configFile": "path/to/.eslintrc" }`);
     }
@@ -43,6 +43,9 @@ const reporter: TextlintRuleModule<Options> = (context, options) => {
     });
     return {
         async [Syntax.CodeBlock](node) {
+            if (!node.lang) {
+                return;
+            }
             if (availableLang.indexOf(node.lang) === -1) {
                 return;
             }

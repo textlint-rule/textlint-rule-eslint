@@ -34,7 +34,6 @@
   "devDependencies": {
     "@types/eslint": "^8.4.10",
     "@types/node": "^18.11.18",
-    "@types/structured-source": "^3.0.0",
     "eslint": "8.31.0",
     "textlint-plugin-asciidoctor": "^1.1.0",
     "textlint-scripts": "^13.0.1",
@@ -46,7 +45,7 @@
     "eslint": "^8.0.0"
   },
   "dependencies": {
-    "@textlint/types": "^12.6.0",
+    "@textlint/types": "^13.0.5",
     "structured-source": "^4.0.0"
   }
 }
