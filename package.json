@@ -33,7 +33,7 @@
   ],
   "devDependencies": {
     "@types/eslint": "^8.56.2",
-    "@types/node": "^18.19.17",
+    "@types/node": "^18.19.18",
     "eslint": "8.31.0",
     "textlint-plugin-asciidoctor": "^1.1.0",
     "textlint-scripts": "^13.4.1",
