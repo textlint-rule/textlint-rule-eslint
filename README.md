@@ -92,7 +92,7 @@ textlint --rule eslint README.md
         "eslint": {
             // Required: path to .eslintrc file
             "configFile": "path/to/.eslintrc",
-            // recognize lang of CodeBlock
+            // recognize lang of CodeBlock as JavaScript
             "langs": ["js", "javascript", "node", "jsx"],
             // Ignore ESLint parsing errors
             "ignoreParsingErrors": true
@@ -117,7 +117,7 @@ See [Releases page](https://github.com/textlint-rule/textlint-rule-eslint/releas
 
 Install devDependencies and Run `npm test`:
 
-    npm i -d && npm test
+    npm ci && npm test
 
 ## Contributing
 
