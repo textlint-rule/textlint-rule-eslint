@@ -50,7 +50,7 @@ Install with [npm](https://www.npmjs.com/):
 
     npm install textlint-rule-eslint eslint
 
-Supported Versions:
+Support Versions:
 
 - `textlint-rule-eslint@5`: Support ESLint 9
 - `textlint-rule-eslint@4`: Support ESLint 8
