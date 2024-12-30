@@ -93,8 +93,8 @@ textlint --rule eslint README.md
 {
     "rules": {
         "eslint": {
-            // Required: path to .eslintrc file
-            "configFile": "path/to/.eslintrc",
+            // Required: path to eslint.config file
+            "configFile": "./path/to/eslint.config.mjs",
             // recognize lang of CodeBlock as JavaScript
             "langs": ["js", "javascript", "node", "jsx"],
             // Ignore ESLint parsing errors
