@@ -64,8 +64,8 @@ Via `.textlintrc` (recommended):
 {
     "rules": {
         "eslint": {
-          // Required: path to .eslintrc file
-          "configFile": "path/to/.eslintrc"
+          // Required: path to eslint.config file
+          "configFile": "./path/to/eslint.config.mjs"
         }
     }
 }
