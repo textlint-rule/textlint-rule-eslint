@@ -2,6 +2,11 @@
 
 [textlint](https://textlint.github.io/ "textlint official site") rule to lint JavaScript in Markdown with ESLint.
 
+> [!WARNING]
+> Now you can Lint CodeBlock code in ESLint by using [@eslint/markdown](https://github.com/eslint/markdown).
+> Therefore, this rule is only maintained.
+
+
 ## Use case
 
 ESLint can lint Markdown files using [eslint-plugin-markdown](https://github.com/eslint/eslint-plugin-markdown "eslint/eslint-plugin-markdown"). But eslint-plugin-markdown doesn't support disabling Markdown (HTML) comments for ignoring some CodeBlocks.
