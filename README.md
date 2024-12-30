@@ -114,6 +114,7 @@ See [https://github.com/textlint/textlint/#fixable](https://github.com/textlint/
 See [Releases page](https://github.com/textlint-rule/textlint-rule-eslint/releases).
 
 - `textlint-rule-eslint@5`: Support ESLint 9
+- `textlint-rule-eslint@4`: Support ESLint 8
 
 ## Running tests
 
