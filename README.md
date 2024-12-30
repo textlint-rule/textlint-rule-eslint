@@ -37,7 +37,7 @@ To ignore ESLint parsing errors that cannot be ignored from the config file, you
 {
     "rules": {
         "eslint": {
-          "configFile": "path/to/.eslintrc"
+          "configFile": "path/to/.eslintrc",
           "ignoreParsingErrors": true
         }
     }
@@ -93,7 +93,7 @@ textlint --rule eslint README.md
             // Required: path to .eslintrc file
             "configFile": "path/to/.eslintrc",
             // recognize lang of CodeBlock
-            "langs": ["js", "javascript", "node", "jsx"]
+            "langs": ["js", "javascript", "node", "jsx"],
             // Ignore ESLint parsing errors
             "ignoreParsingErrors": true
         }

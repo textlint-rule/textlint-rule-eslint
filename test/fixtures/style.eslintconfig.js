@@ -8,6 +8,7 @@ module.exports = {
         }],
         "quotes": ["error", "double"],
         "key-spacing": "error",
+        "no-dupe-keys": "error",
         "keyword-spacing": "error",
         "linebreak-style": ["error", "unix"],
         "rest-spread-spacing": "error",

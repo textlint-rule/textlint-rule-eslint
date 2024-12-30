@@ -32,21 +32,21 @@
     "textlint"
   ],
   "devDependencies": {
-    "@types/eslint": "^8.56.11",
-    "@types/node": "^18.19.44",
-    "eslint": "8.31.0",
+    "@types/eslint": "^9.6.1",
+    "@types/node": "^22.10.2",
+    "eslint": "^9.17.0",
     "textlint-plugin-asciidoctor": "^1.1.0",
-    "textlint-scripts": "^14.2.0",
-    "textlint-tester": "^14.2.0",
+    "textlint-scripts": "^14.4.0",
+    "textlint-tester": "^14.4.0",
     "ts-node": "^10.9.2",
-    "typescript": "^4.9.4"
+    "typescript": "^5.7.2"
   },
   "peerDependencies": {
-    "eslint": "^8.0.0"
+    "eslint": "^9.0.0"
   },
   "dependencies": {
-    "@textlint/types": "^14.2.0",
+    "@textlint/types": "^14.4.0",
     "structured-source": "^4.0.0"
   },
-  "packageManager": "npm@10.8.2+sha512.c7f0088c520a46596b85c6f8f1da943400199748a0f7ea8cb8df75469668dc26f6fb3ba26df87e2884a5ebe91557292d0f3db7d0929cdb4f14910c3032ac81fb"
+  "packageManager": "npm@11.0.0+sha512.11dff29565d2297c74e7c594a9762581bde969f0aa5cbe6f5b3644bf008a16c065ece61094d9ffbb81125be38df8e1ba43eb8244b3d30c61eb797e9a2440e3ec"
 }
