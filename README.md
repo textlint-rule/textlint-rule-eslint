@@ -4,7 +4,7 @@
 
 > [!WARNING]
 > Now you can Lint CodeBlock code in ESLint by using [@eslint/markdown](https://github.com/eslint/markdown).
-> Therefore, this rule is only maintained.
+> Therefore, this rule is maintenance mode
 
 
 ## Use case
