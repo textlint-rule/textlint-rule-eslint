@@ -113,6 +113,8 @@ See [https://github.com/textlint/textlint/#fixable](https://github.com/textlint/
 
 See [Releases page](https://github.com/textlint-rule/textlint-rule-eslint/releases).
 
+- `textlint-rule-eslint@5`: Support ESLint 9
+
 ## Running tests
 
 Install devDependencies and Run `npm test`:
