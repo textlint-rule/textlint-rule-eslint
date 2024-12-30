@@ -26,121 +26,116 @@ export type Options = {
     configFile: string;
     langs: string[];
 };
-const createReporter = ({ fix }: { fix: boolean }): TextlintRuleModule<Options> => {
-    return (context, options) => {
-        const { Syntax, RuleError, report, fixer, getSource, locator } = context;
-        if (!options) {
-            throw new Error(`Require options: { "configFile": "path/to/.eslintrc" }`);
-        }
-        if (!options.configFile) {
-            throw new Error(`Require options: { "configFile": "path/to/.eslintrc" }`);
-        }
-        const availableLang = options.langs || defaultOptions.langs;
-        const textlintRCDir = getConfigBaseDir(context);
-        const esLintConfigFilePath = textlintRCDir
-            ? path.resolve(textlintRCDir, options.configFile)
-            : options.configFile;
-        const engine = new ESLint({
-            overrideConfigFile: esLintConfigFilePath,
-            ignore: false
-        });
-        return {
-            async [Syntax.CodeBlock](node) {
-                if (!node.lang) {
-                    return;
-                }
-                if (availableLang.indexOf(node.lang) === -1) {
-                    return;
-                }
-                const raw = getSource(node);
-                const code = getUntrimmedCode(node, raw);
-                const source = new StructuredSource(code);
-                const resultLinting = await engine.lintText(code, {
-                    filePath: `test.js`
-                });
-                if (resultLinting.length === 0) {
-                    return;
-                }
-                resultLinting.forEach((result) => {
-                    result.messages.forEach((message) => {
-                        /*
+const reporter: TextlintRuleModule<Options> = (context, options) => {
+    const { Syntax, RuleError, report, fixer, getSource, locator } = context;
+    if (!options) {
+        throw new Error(`Require options: { "configFile": "path/to/.eslintrc" }`);
+    }
+    if (!options.configFile) {
+        throw new Error(`Require options: { "configFile": "path/to/.eslintrc" }`);
+    }
+    const availableLang = options.langs || defaultOptions.langs;
+    const textlintRCDir = getConfigBaseDir(context);
+    const esLintConfigFilePath = textlintRCDir ? path.resolve(textlintRCDir, options.configFile) : options.configFile;
+    const engine = new ESLint({
+        overrideConfigFile: esLintConfigFilePath,
+        ignore: false
+    });
+    return {
+        async [Syntax.CodeBlock](node) {
+            if (!node.lang) {
+                return;
+            }
+            if (availableLang.indexOf(node.lang) === -1) {
+                return;
+            }
+            const raw = getSource(node);
+            const code = getUntrimmedCode(node, raw);
+            const source = new StructuredSource(code);
+            const resultLinting = await engine.lintText(code, {
+                filePath: `test.js`
+            });
+            if (resultLinting.length === 0) {
+                return;
+            }
+            resultLinting.forEach((result) => {
+                result.messages.forEach((message) => {
+                    /*
 
-             1. ```js
-             2. CODE
-             3. ```
+1. ```js
+2. CODE
+3. ```
 
-             ESLint message line and column start with 1
-             */
-                        if (options.ignoreParsingErrors && message.message.includes("Parsing error")) {
-                            return;
-                        }
+ESLint message line and column start with 1
+*/
+                    if (options.ignoreParsingErrors && message.message.includes("Parsing error")) {
+                        return;
+                    }
 
-                        const prefix = message.ruleId ? `${message.ruleId}: ` : "";
-                        if (message.fix) {
-                            // relative range from node
-                            const fixedRange = message.fix.range;
-                            const fixedText = message.fix.text;
-                            const sourceBlockDiffIndex = raw !== node.value ? raw.indexOf(code) : 0;
-                            const fixedWithPadding = [
-                                fixedRange[0] + sourceBlockDiffIndex,
-                                fixedRange[1] + sourceBlockDiffIndex
+                    const prefix = message.ruleId ? `${message.ruleId}: ` : "";
+                    if (message.fix) {
+                        // relative range from node
+                        const fixedRange = message.fix.range;
+                        const fixedText = message.fix.text;
+                        const sourceBlockDiffIndex = raw !== node.value ? raw.indexOf(code) : 0;
+                        const fixedWithPadding = [
+                            fixedRange[0] + sourceBlockDiffIndex,
+                            fixedRange[1] + sourceBlockDiffIndex
+                        ] as const;
+                        const location = source.rangeToLocation(fixedWithPadding);
+                        const isSamePosition =
+                            location.start.line === location.end.line && location.start.column === location.end.column;
+                        report(
+                            node,
+                            new RuleError(`${prefix}${message.message}`, {
+                                padding: isSamePosition
+                                    ? locator.at(fixedWithPadding[0])
+                                    : locator.range(fixedWithPadding),
+                                fix: isSamePosition
+                                    ? fixer.insertTextAfterRange(fixedWithPadding, fixedText)
+                                    : fixer.replaceTextRange(fixedWithPadding, fixedText)
+                            })
+                        );
+                    } else {
+                        const sourceBlockDiffIndex = raw !== node.value ? raw.indexOf(code) : 0;
+                        if (message.endLine !== undefined && message.endColumn !== undefined) {
+                            const range = source.locationToRange({
+                                start: {
+                                    line: message.line,
+                                    column: message.column
+                                },
+                                end: {
+                                    line: message.endLine,
+                                    column: message.endColumn
+                                }
+                            });
+                            const adjustedRange = [
+                                range[0] + sourceBlockDiffIndex,
+                                range[1] + sourceBlockDiffIndex
                             ] as const;
-                            const location = source.rangeToLocation(fixedWithPadding);
-                            const isSamePosition =
-                                location.start.line === location.end.line &&
-                                location.start.column === location.end.column;
                             report(
                                 node,
                                 new RuleError(`${prefix}${message.message}`, {
-                                    padding: isSamePosition
-                                        ? locator.at(fixedWithPadding[0])
-                                        : locator.range(fixedWithPadding),
-                                    fix: isSamePosition
-                                        ? fixer.insertTextAfterRange(fixedWithPadding, fixedText)
-                                        : fixer.replaceTextRange(fixedWithPadding, fixedText)
+                                    padding: locator.range(adjustedRange)
                                 })
                             );
                         } else {
-                            const sourceBlockDiffIndex = raw !== node.value ? raw.indexOf(code) : 0;
-                            if (message.endLine !== undefined && message.endColumn !== undefined) {
-                                const range = source.locationToRange({
-                                    start: {
-                                        line: message.line,
-                                        column: message.column
-                                    },
-                                    end: {
-                                        line: message.endLine,
-                                        column: message.endColumn
-                                    }
-                                });
-                                const adjustedRange = [
-                                    range[0] + sourceBlockDiffIndex,
-                                    range[1] + sourceBlockDiffIndex
-                                ] as const;
-                                report(
-                                    node,
-                                    new RuleError(`${prefix}${message.message}`, {
-                                        padding: locator.range(adjustedRange)
-                                    })
-                                );
-                            } else {
-                                const index = source.positionToIndex({
-                                    line: message.line,
-                                    column: message.column
-                                });
-                                const adjustedIndex = index + sourceBlockDiffIndex - 1;
-                                report(
-                                    node,
-                                    new RuleError(`${prefix}${message.message}`, {
-                                        padding: locator.at(adjustedIndex)
-                                    })
-                                );
-                            }
+                            const index = source.positionToIndex({
+                                line: message.line,
+                                column: message.column
+                            });
+                            const adjustedIndex = index + sourceBlockDiffIndex - 1;
+                            report(
+                                node,
+                                new RuleError(`${prefix}${message.message}`, {
+                                    padding: locator.at(adjustedIndex)
+                                })
+                            );
                         }
-                    });
+                    }
                 });
-            }
-        };
+            });
+        }
     };
 };
 
@@ -177,10 +172,6 @@ function getUntrimmedCode(node: any, raw: string) {
 }
 
 export default {
-    linter: createReporter({
-        fix: false
-    }),
-    fixer: createReporter({
-        fix: true
-    })
+    linter: reporter,
+    fixer: reporter
 };
