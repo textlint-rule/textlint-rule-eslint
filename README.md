@@ -37,7 +37,7 @@ To ignore ESLint parsing errors that cannot be ignored from the config file, you
 {
     "rules": {
         "eslint": {
-          "configFile": "path/to/.eslintrc"
+          "configFile": "path/to/.eslintrc",
           "ignoreParsingErrors": true
         }
     }
@@ -92,8 +92,8 @@ textlint --rule eslint README.md
         "eslint": {
             // Required: path to .eslintrc file
             "configFile": "path/to/.eslintrc",
-            // recognize lang of CodeBlock
-            "langs": ["js", "javascript", "node", "jsx"]
+            // recognize lang of CodeBlock as JavaScript
+            "langs": ["js", "javascript", "node", "jsx"],
             // Ignore ESLint parsing errors
             "ignoreParsingErrors": true
         }
@@ -113,11 +113,14 @@ See [https://github.com/textlint/textlint/#fixable](https://github.com/textlint/
 
 See [Releases page](https://github.com/textlint-rule/textlint-rule-eslint/releases).
 
+- `textlint-rule-eslint@5`: Support ESLint 9
+- `textlint-rule-eslint@4`: Support ESLint 8
+
 ## Running tests
 
 Install devDependencies and Run `npm test`:
 
-    npm i -d && npm test
+    npm ci && npm test
 
 ## Contributing
 

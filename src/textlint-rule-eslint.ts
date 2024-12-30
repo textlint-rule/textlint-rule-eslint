@@ -1,15 +1,15 @@
 // LICENSE : MIT
 "use strict";
 import path from "path";
-import type { TextlintRuleContext, TextlintRuleModule } from "@textlint/types"
+import type { TextlintRuleContext, TextlintRuleModule } from "@textlint/types";
 import { StructuredSource } from "structured-source";
 import { ESLint } from "eslint";
 
 const defaultOptions = {
-    // path to .eslintrc file
-    "configFile": null,
-    // recognize lang of CodeBlock
-    "langs": ["js", "javascript", "node", "jsx"]
+    // path to eslint config file
+    configFile: null,
+    // recognize lang of CodeBlock as JavaScript
+    langs: ["js", "javascript", "node", "jsx"]
 };
 const getConfigBaseDir = (context: TextlintRuleContext & { config?: any }) => {
     if (typeof context.getConfigBaseDir === "function") {
@@ -24,10 +24,10 @@ const getConfigBaseDir = (context: TextlintRuleContext & { config?: any }) => {
 
 export type Options = {
     configFile: string;
-    langs: string[]
-}
+    langs: string[];
+};
 const reporter: TextlintRuleModule<Options> = (context, options) => {
-    const { Syntax, RuleError, report, fixer, getSource, getFilePath } = context;
+    const { Syntax, RuleError, report, fixer, getSource, locator } = context;
     if (!options) {
         throw new Error(`Require options: { "configFile": "path/to/.eslintrc" }`);
     }
@@ -38,8 +38,8 @@ const reporter: TextlintRuleModule<Options> = (context, options) => {
     const textlintRCDir = getConfigBaseDir(context);
     const esLintConfigFilePath = textlintRCDir ? path.resolve(textlintRCDir, options.configFile) : options.configFile;
     const engine = new ESLint({
-        useEslintrc: false,
-        overrideConfigFile: esLintConfigFilePath
+        overrideConfigFile: esLintConfigFilePath,
+        ignore: false
     });
     return {
         async [Syntax.CodeBlock](node) {
@@ -53,56 +53,90 @@ const reporter: TextlintRuleModule<Options> = (context, options) => {
             const code = getUntrimmedCode(node, raw);
             const source = new StructuredSource(code);
             const resultLinting = await engine.lintText(code, {
-                filePath: `test.${node.lang}`
+                filePath: `test.js`
             });
             if (resultLinting.length === 0) {
                 return;
             }
-            resultLinting.forEach(result => {
-                result.messages.forEach(message => {
+            resultLinting.forEach((result) => {
+                result.messages.forEach((message) => {
                     /*
 
-                     1. ```js
-                     2. CODE
-                     3. ```
+1. ```js
+2. CODE
+3. ```
 
-                     ESLint message line and column start with 1
-                     */
+ESLint message line and column start with 1
+*/
                     if (options.ignoreParsingErrors && message.message.includes("Parsing error")) {
                         return;
                     }
 
                     const prefix = message.ruleId ? `${message.ruleId}: ` : "";
                     if (message.fix) {
+                        // relative range from node
                         const fixedRange = message.fix.range;
                         const fixedText = message.fix.text;
-                        const sourceBlockDiffIndex = (raw !== node.value) ? raw.indexOf(code) : 0;
-                        const fixedWithPadding = [fixedRange[0] + sourceBlockDiffIndex, fixedRange[1] + sourceBlockDiffIndex] as const;
-                        const index = source.positionToIndex({
-                            line: message.line,
-                            column: message.column
-                        });
-                        const adjustedIndex = index + sourceBlockDiffIndex - 1;
-                        report(node, new RuleError(`${prefix}${message.message}`, {
-                            index: adjustedIndex,
-                            fix: fixer.replaceTextRange(fixedWithPadding as [number, number], fixedText)
-                        }));
+                        const sourceBlockDiffIndex = raw !== node.value ? raw.indexOf(code) : 0;
+                        const fixedWithPadding = [
+                            fixedRange[0] + sourceBlockDiffIndex,
+                            fixedRange[1] + sourceBlockDiffIndex
+                        ] as const;
+                        const location = source.rangeToLocation(fixedWithPadding);
+                        const isSamePosition =
+                            location.start.line === location.end.line && location.start.column === location.end.column;
+                        report(
+                            node,
+                            new RuleError(`${prefix}${message.message}`, {
+                                padding: isSamePosition
+                                    ? locator.at(fixedWithPadding[0])
+                                    : locator.range(fixedWithPadding),
+                                fix: isSamePosition
+                                    ? fixer.insertTextAfterRange(fixedWithPadding, fixedText)
+                                    : fixer.replaceTextRange(fixedWithPadding, fixedText)
+                            })
+                        );
                     } else {
-                        const sourceBlockDiffIndex = (raw !== node.value) ? raw.indexOf(code) : 0;
-                        const index = source.positionToIndex({
-                            line: message.line,
-                            column: message.column
-                        });
-                        const adjustedIndex = index + sourceBlockDiffIndex - 1;
-                        report(node, new RuleError(`${prefix}${message.message}`, {
-                            index: adjustedIndex
-                        }));
+                        const sourceBlockDiffIndex = raw !== node.value ? raw.indexOf(code) : 0;
+                        if (message.endLine !== undefined && message.endColumn !== undefined) {
+                            const range = source.locationToRange({
+                                start: {
+                                    line: message.line,
+                                    column: message.column
+                                },
+                                end: {
+                                    line: message.endLine,
+                                    column: message.endColumn
+                                }
+                            });
+                            const adjustedRange = [
+                                range[0] + sourceBlockDiffIndex,
+                                range[1] + sourceBlockDiffIndex
+                            ] as const;
+                            report(
+                                node,
+                                new RuleError(`${prefix}${message.message}`, {
+                                    padding: locator.range(adjustedRange)
+                                })
+                            );
+                        } else {
+                            const index = source.positionToIndex({
+                                line: message.line,
+                                column: message.column
+                            });
+                            const adjustedIndex = index + sourceBlockDiffIndex - 1;
+                            report(
+                                node,
+                                new RuleError(`${prefix}${message.message}`, {
+                                    padding: locator.at(adjustedIndex)
+                                })
+                            );
+                        }
                     }
-
                 });
             });
         }
-    }
+    };
 };
 
 /**
@@ -113,7 +147,7 @@ const reporter: TextlintRuleModule<Options> = (context, options) => {
  */
 function getUntrimmedCode(node: any, raw: string) {
     if (node.type !== "CodeBlock") {
-        return node.value
+        return node.value;
     }
     // Space indented CodeBlock that has not lang
     if (!node.lang) {
@@ -123,7 +157,7 @@ function getUntrimmedCode(node: any, raw: string) {
     // If it is not markdown codeBlock, just use node.value
     if (!(raw.startsWith("```") && raw.endsWith("```"))) {
         if (node.value.endsWith("\n")) {
-            return node.value
+            return node.value;
         }
         return node.value + "\n";
     }

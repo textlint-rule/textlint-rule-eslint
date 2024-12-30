@@ -3,6 +3,7 @@
 import rule from "../src/textlint-rule-eslint";
 import TextLintTester from "textlint-tester";
 import path from "path";
+
 const tester = new TextLintTester();
 const configFilePath = path.join(__dirname, "fixtures/style.eslintconfig.js");
 const WrongCode1 = "var a = 1";
@@ -17,44 +18,34 @@ tester.run("textlint-rule-eslint", rule, {
             }
         },
         {
-            text: "```js\n" +
-                "var a = 1;\n" +
-                "```",
+            text: "```js\n" + "var a = 1;\n" + "```",
             options: {
                 configFile: configFilePath
             }
         },
         {
-            text: "```\n\n" +
-                "++++++" +
-                "```",
+            text: "```\n\n" + "++++++" + "```",
             options: {
                 configFile: configFilePath
             }
         },
         {
-            text: "```js\n\n" +
-                "var a = 1;\n\n" +
-                "```",
+            text: "```js\n\n" + "var a = 1;\n\n" + "```",
             options: {
                 configFile: configFilePath
             }
         },
         {
-            text: "```js\n\n" +
-                "+++1+++\n" +
-                "```",
+            text: "```js\n\n" + "+++1+++\n" + "```",
             options: {
                 configFile: configFilePath,
                 ignoreParsingErrors: true
             }
-        },
+        }
     ],
     invalid: [
         {
-            text: "```js\n" +
-                "+++1+++\n" +
-                "```",
+            text: "```js\n" + "+++1+++\n" + "```",
             errors: [
                 {
                     message: "Parsing error: Assigning to rvalue",
@@ -67,12 +58,8 @@ tester.run("textlint-rule-eslint", rule, {
             }
         },
         {
-            text: "```js\n" +
-                WrongCode1 + "\n" +
-                "```",
-            output: "```js\n" +
-                WrongCode1 + ";\n" +
-                "```",
+            text: "```js\n" + WrongCode1 + "\n" + "```",
+            output: "```js\n" + WrongCode1 + ";\n" + "```",
             errors: [
                 {
                     message: "semi: Missing semicolon.",
@@ -85,14 +72,8 @@ tester.run("textlint-rule-eslint", rule, {
             }
         },
         {
-            text: "```javascript\n" +
-                "var a = 1\n" +
-                "var b = 2\n" +
-                "```",
-            output: "```javascript\n" +
-                "var a = 1;\n" +
-                "var b = 2;\n" +
-                "```",
+            text: "```javascript\n" + "var a = 1\n" + "var b = 2\n" + "```",
+            output: "```javascript\n" + "var a = 1;\n" + "var b = 2;\n" + "```",
             errors: [
                 {
                     message: "semi: Missing semicolon.",
@@ -109,28 +90,39 @@ tester.run("textlint-rule-eslint", rule, {
                 configFile: configFilePath
             }
         },
+        // no-dupe-keys error
+        // It test that report range as error
+        {
+            text: `
+\`\`\`js
+var foo = {
+    bar: "baz",
+    bar: "qux"
+};
+\`\`\`
+`,
+            errors: [
+                {
+                    message: "no-dupe-keys: Duplicate key 'bar'.",
+                    range: [40, 43]
+                }
+            ],
+            options: {
+                configFile: configFilePath
+            }
+        },
         // multiple
         {
-            text: "```js\n" +
-                WrongCode1 + "\n" +
-                "```\n" +
-                "This is text.\n" +
-                "```js\n" +
-                WrongCode2 + "\n" +
-                "```",
-            output: "```js\n" +
-                WrongCode1 + ";\n" +
-                "```\n" +
-                "This is text.\n" +
-                "```js\n" +
-                WrongCode2 + ";\n" +
-                "```",
+            text: "```js\n" + WrongCode1 + "\n" + "```\n" + "This is text.\n" + "```js\n" + WrongCode2 + "\n" + "```",
+            output:
+                "```js\n" + WrongCode1 + ";\n" + "```\n" + "This is text.\n" + "```js\n" + WrongCode2 + ";\n" + "```",
             errors: [
                 {
                     message: "semi: Missing semicolon.",
                     line: 2,
                     column: 10
-                }, {
+                },
+                {
                     message: "semi: Missing semicolon.",
                     line: 6,
                     column: 21
