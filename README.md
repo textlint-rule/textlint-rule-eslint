@@ -50,7 +50,10 @@ Install with [npm](https://www.npmjs.com/):
 
     npm install textlint-rule-eslint eslint
 
-:warning: textlint-rule-eslint 4+ requires eslint 8+.
+Supported Versions:
+
+- `textlint-rule-eslint@5`: Support ESLint 9
+- `textlint-rule-eslint@4`: Support ESLint 8
 
 ## Usage
 
@@ -112,9 +115,6 @@ See [https://github.com/textlint/textlint/#fixable](https://github.com/textlint/
 ## Changelog
 
 See [Releases page](https://github.com/textlint-rule/textlint-rule-eslint/releases).
-
-- `textlint-rule-eslint@5`: Support ESLint 9
-- `textlint-rule-eslint@4`: Support ESLint 8
 
 ## Running tests
 
