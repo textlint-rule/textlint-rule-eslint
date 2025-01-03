@@ -26,6 +26,22 @@ export type Options = {
     configFile: string;
     langs: string[];
 };
+const createESLint = () => {
+    const cache = new Map<string, ESLint>();
+    return function getESLint(esLintConfigFilePath: string) {
+        const cachedESLint = cache.get(esLintConfigFilePath);
+        if (cachedESLint) {
+            return cachedESLint;
+        }
+        const engine = new ESLint({
+            overrideConfigFile: esLintConfigFilePath,
+            ignore: false
+        });
+        cache.set(esLintConfigFilePath, engine);
+        return engine;
+    };
+};
+const getESLint = createESLint();
 const reporter: TextlintRuleModule<Options> = (context, options) => {
     const { Syntax, RuleError, report, fixer, getSource, locator } = context;
     if (!options) {
@@ -37,10 +53,7 @@ const reporter: TextlintRuleModule<Options> = (context, options) => {
     const availableLang = options.langs || defaultOptions.langs;
     const textlintRCDir = getConfigBaseDir(context);
     const esLintConfigFilePath = textlintRCDir ? path.resolve(textlintRCDir, options.configFile) : options.configFile;
-    const engine = new ESLint({
-        overrideConfigFile: esLintConfigFilePath,
-        ignore: false
-    });
+    const engine = getESLint(esLintConfigFilePath);
     return {
         async [Syntax.CodeBlock](node) {
             if (!node.lang) {
