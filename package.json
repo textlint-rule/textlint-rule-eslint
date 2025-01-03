@@ -15,7 +15,7 @@
     "src/",
     "lib/"
   ],
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "textlint rule integrate with ESLint.",
   "main": "lib/textlint-rule-eslint.js",
   "directories": {
