@@ -35,13 +35,13 @@
   ],
   "devDependencies": {
     "@types/eslint": "^9.6.1",
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.10.3",
     "eslint": "^9.17.0",
     "lint-staged": "^15.3.0",
     "prettier": "^3.4.2",
     "textlint-plugin-asciidoctor": "^1.1.0",
-    "textlint-scripts": "^14.4.0",
-    "textlint-tester": "^14.4.0",
+    "textlint-scripts": "^14.4.2",
+    "textlint-tester": "^14.4.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   },
@@ -49,7 +49,7 @@
     "eslint": "^9.0.0"
   },
   "dependencies": {
-    "@textlint/types": "^14.4.0",
+    "@textlint/types": "^14.4.2",
     "structured-source": "^4.0.0"
   },
   "packageManager": "npm@11.0.0+sha512.11dff29565d2297c74e7c594a9762581bde969f0aa5cbe6f5b3644bf008a16c065ece61094d9ffbb81125be38df8e1ba43eb8244b3d30c61eb797e9a2440e3ec",
