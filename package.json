@@ -35,9 +35,9 @@
   ],
   "devDependencies": {
     "@types/eslint": "^9.6.1",
-    "@types/node": "^22.14.0",
+    "@types/node": "^22.14.1",
     "eslint": "^9.17.0",
-    "lint-staged": "^15.5.0",
+    "lint-staged": "^15.5.1",
     "prettier": "^3.4.2",
     "textlint-plugin-asciidoctor": "^1.1.0",
     "textlint-scripts": "^14.6.0",
