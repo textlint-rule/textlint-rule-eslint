@@ -40,8 +40,8 @@
     "lint-staged": "^16.1.5",
     "prettier": "^3.4.2",
     "textlint-plugin-asciidoctor": "^1.1.0",
-    "textlint-scripts": "^15.2.1",
-    "textlint-tester": "^15.2.1",
+    "textlint-scripts": "^15.2.2",
+    "textlint-tester": "^15.2.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   },
@@ -49,7 +49,7 @@
     "eslint": "^9.0.0"
   },
   "dependencies": {
-    "@textlint/types": "^15.2.1",
+    "@textlint/types": "^15.2.2",
     "structured-source": "^4.0.0"
   },
   "packageManager": "npm@11.5.2+sha512.aac1241cfc3f41dc38780d64295c6c6b917a41e24288b33519a7b11adfc5a54a5f881c642d7557215b6c70e01e55655ed7ba666300fd0238bc75fb17478afaf3",
