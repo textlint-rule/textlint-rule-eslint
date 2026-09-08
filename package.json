@@ -37,7 +37,7 @@
     "@types/eslint": "^9.6.1",
     "@types/node": "^22.20.1",
     "eslint": "^9.17.0",
-    "lint-staged": "^16.4.0",
+    "lint-staged": "^17.5.0",
     "prettier": "^3.4.2",
     "textlint-plugin-asciidoctor": "^1.1.0",
     "textlint-scripts": "^15.8.0",
